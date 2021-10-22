@@ -1,76 +1,92 @@
-<wsdl:definitions targetNamespace = "http://tempuri.org/wsdl/SendTimesheetService"
-   xmlns:s="http://www.w3.org/2001/XMLSchema" 
-   xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
-   xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" 
-   xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" 
-   xmlns:tns="http://tempuri.org/wsdl/SendTimesheetService" 
-   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-   xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" 
-   xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
-   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-   <wsdl:types>
-      <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/wsdl/SendTimesheetService">
-        <s:element name="SendTimesheet">
-          <s:complexType>
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="Timesheet" type="s:string"/>
-            </s:sequence>
-          </s:complexType>
-        </s:element>
-        <s:element name="SendTimesheetResponse">
-          <s:complexType>
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="SendTimesheetResponse" type="s:string"/>
-            </s:sequence>
-          </s:complexType>
-        </s:element>
-      </s:schema>
-    </wsdl:types>
-   <wsdl:message name = "SendTimesheetSoapIn">
-      <wsdl:part name = "parameters" element = "tns:SendTimesheet"/>
-   </wsdl:message>
-   <wsdl:message name = "SendTimesheetSoapOut">
-      <wsdl:part name = "parameters" element = "tns:SendTimesheetResponse"/>
-   </wsdl:message>
-   <wsdl:portType name = "SendTimesheetSoap">
-      <wsdl:operation name = "SendTimesheet">
-         <wsdl:input message = "tns:SendTimesheetSoapIn"/>
-         <wsdl:output message = "tns:SendTimesheetSoapOut"/>
-      </wsdl:operation>
-   </wsdl:portType>
-
-   <wsdl:binding name = "SendTimesheetSoap" type = "tns:SendTimesheetSoap">
-      <soap:binding transport = "http://schemas.xmlsoap.org/soap/http"/>
-      <wsdl:operation name = "SendTimesheet">
-         <soap:operation soapAction = "http://tempuri.org/wsdl/SendTimesheetService/SendTimesheet" style = "document"/>
-         <wsdl:input>
-            <soap:body use = "literal"/>
-         </wsdl:input>
-         <wsdl:output>
-            <soap:body use = "literal"/>
-         </wsdl:output>
-      </wsdl:operation>
-   </wsdl:binding>
-   <wsdl:binding name = "SendTimesheetSoap12" type = "tns:SendTimesheetSoap">
-      <soap12:binding transport = "http://schemas.xmlsoap.org/soap/http"/>
-      <wsdl:operation name = "SendTimesheet">
-         <soap12:operation soapAction = "http://tempuri.org/wsdl/SendTimesheetService/SendTimesheet" style = "document"/>
-         <wsdl:input>
-            <soap12:body use = "literal"/>
-         </wsdl:input>
-         <wsdl:output>
-            <soap12:body use = "literal"/>
-         </wsdl:output>
-      </wsdl:operation>
-   </wsdl:binding>
-
-   <wsdl:service name = "SendTimesheetService">
-      <wsdl:port binding = "tns:SendTimesheetSoap" name = "SendTimesheetSoap">
-         <soap:address location = "https://staging-vantagepoint-soap-server.mosaicapp.com/wsdl" />
-      </wsdl:port>
-      <wsdl:port binding = "tns:SendTimesheetSoap12" name = "SendTimesheetSoap">
-         <soap12:address location = "https://staging-vantagepoint-soap-server.mosaicapp.com/wsdl" />
-      </wsdl:port>
-   </wsdl:service>
-
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://staging-vantagepoint-soap-server.mosaicapp.com/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="https://staging-vantagepoint-soap-server.mosaicapp.com/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://staging-vantagepoint-soap-server.mosaicapp.com/wsdl/">
+      <s:element name="SendTimesheet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Timesheet" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendTimesheetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TimesheetResponse" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendTimesheetSoapIn">
+    <wsdl:part name="parameters" element="tns:SendTimesheet" />
+  </wsdl:message>
+  <wsdl:message name="SendTimesheetSoapOut">
+    <wsdl:part name="parameters" element="tns:SendTimesheetResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendTimesheetHttpPostIn">
+    <wsdl:part name="Timesheet" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendTimesheetHttpPostOut">
+    <wsdl:part name="TimesheetBody" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="SendTimesheetSoap">
+    <wsdl:operation name="SendTimesheet">
+      <wsdl:input message="tns:SendTimesheetSoapIn" />
+      <wsdl:output message="tns:SendTimesheetSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="SendTimesheetHttpPost">
+    <wsdl:operation name="SendTimesheet">
+      <wsdl:input message="tns:SendTimesheetHttpPostIn" />
+      <wsdl:output message="tns:SendTimesheetHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SendTimesheetSoap" type="tns:SendTimesheetSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendTimesheet">
+      <soap:operation soapAction="https://staging-vantagepoint-soap-server.mosaicapp.com/wsdl/SendTimesheet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SendTimesheetSoap12" type="tns:SendTimesheetSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendTimesheet">
+      <soap12:operation soapAction="https://staging-vantagepoint-soap-server.mosaicapp.com/wsdl/SendTimesheet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SendTimesheetHttpPost" type="tns:SendTimesheetHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="SendTimesheet">
+      <http:operation location="/SendTimesheet" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SendTimesheetService">
+    <wsdl:port name="SendTimesheetSoap" binding="tns:SendTimesheetSoap">
+      <soap:address location="https://staging-vantagepoint-soap-server.mosaicapp.com/wsdl" />
+    </wsdl:port>
+    <wsdl:port name="SendTimesheetSoap12" binding="tns:SendTimesheetSoap12">
+      <soap12:address location="https://staging-vantagepoint-soap-server.mosaicapp.com/wsdl" />
+    </wsdl:port>
+    <wsdl:port name="SendTimesheetHttpPost" binding="tns:SendTimesheetHttpPost">
+      <http:address location="https://staging-vantagepoint-soap-server.mosaicapp.com/wsdl" />
+    </wsdl:port>
+  </wsdl:service>
 </wsdl:definitions>
